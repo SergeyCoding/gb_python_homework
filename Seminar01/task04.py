@@ -6,10 +6,10 @@ print("Семинар 1. Задача 4")
 
 num = int(input('Число: '))
 
-for i in range(2, num+1):
-    if(i % 2 == 0):
-        if(i > 2):
-            print(', ', end='')
-        print(i, end='')
+if(num >= 2):
+    print(2, end='')
+
+for i in range(4, num+1, 2):
+    print(f', {i}', end='')
 
 print()
