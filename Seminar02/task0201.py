@@ -2,17 +2,13 @@
 # N = 4 -> [ 1, 2, 6, 24 ] (1, 1*2, 1*2*3, 1*2*3*4)
 
 
-from math import factorial
-
-
 print("Семинар 2. Задача 1")
 
 number = int(input('Number: '))
 
+result = [1]*number
 
-def Factorial():
-    pass
+for i in range(1, number):
+    result[i] = result[i-1]*(i+1)
 
-
-for i in range(1, number+1):
-    print(Factorial())
+print(result)

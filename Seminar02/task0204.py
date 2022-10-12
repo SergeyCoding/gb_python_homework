@@ -2,3 +2,9 @@
 # 3 -> [2, 3, -3, -2, -1, 0, 1]
 
 print("Семинар 2. Задача 4")
+
+number = int(input('Number: '))
+
+lst = [*range(-number, number+1)]
+
+print(lst)
