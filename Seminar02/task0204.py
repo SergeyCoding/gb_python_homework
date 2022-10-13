@@ -4,7 +4,8 @@
 print("Семинар 2. Задача 4")
 
 number = int(input('Number: '))
+shift = int(input('Shift: '))
 
 lst = [*range(-number, number+1)]
 
-print(lst)
+print([*lst[len(lst)-shift:], *lst[:len(lst)-shift]])
