@@ -8,7 +8,13 @@ def create_datafile(file_name):
     f = open(file_name, mode='r+', encoding='utf-8')
 
     check_f = {"привет": "привет", 'как тебя зовут?': "Нафаня, а тебя?"}
-    check_set = set(check_f)
+
+    for line in f:
+        if len(check_f) == 0:
+            break
+        for ch in set(check_f):
+            if line.lower().startswith(ch):
+                check_f.pop(ch)
 
     line = f.readline()
     while line != '' and len(check_set) > 0:
