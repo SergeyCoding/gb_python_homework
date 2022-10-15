@@ -9,14 +9,16 @@ def create_datafile(file_name):
 
     check_f = {'привет': 'привет',
                'как тебя зовут?': 'Нафаня, а тебя?',
+               'как тебя зовут': 'Нафаня',
                'пока': 'пока',
                'gjrf': 'пока'}
 
     for line in f:
         if len(check_f) == 0:
             break
+        answer = line.strip().split('<|>')[0].lower()
         for ch in set(check_f):
-            if line.lower().startswith(ch):
+            if answer == ch:
                 check_f.pop(ch)
 
     if len(check_f) > 0:
@@ -48,7 +50,7 @@ def speaking(datafile):
 
         is_answer = False
 
-        f = open(datafile, mode='r+', encoding='utf-8')
+        f = open(datafile, mode='r', encoding='utf-8')
 
         for line in f:
             answer = line.strip().split('<|>')
