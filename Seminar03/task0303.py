@@ -16,16 +16,8 @@ def create_datafile(file_name):
             if line.lower().startswith(ch):
                 check_f.pop(ch)
 
-    line = f.readline()
-    while line != '' and len(check_set) > 0:
-        for ch in check_set:
-            if line.lower().startswith(ch):
-                check_f.pop(ch)
-        check_set = set(check_f)
-        line = f.readline()
-
-    if len(check_set) > 0:
-        for ch in check_set:
+    if len(check_f) > 0:
+        for ch in check_f:
             f.write(f"{ch}<|>{check_f[ch]}\n")
 
     f.close()
@@ -36,7 +28,7 @@ def add_phrase(datafile, question):
     print('Что обычно отвечают на эту фразу? ')
     answer = input("> ")
 
-    f = open(datafile, mode='r+', encoding='utf-8')
+    f = open(datafile, mode='a', encoding='utf-8')
 
     f.write(f"{question}<|>{answer}\n")
 
@@ -46,6 +38,8 @@ def add_phrase(datafile, question):
 
 
 def speaking(datafile):
+    print('Для выхода набрите "пока"')
+
     while True:
         question = input("you> ")
 
@@ -54,7 +48,7 @@ def speaking(datafile):
         f = open(datafile, mode="r+", encoding='utf-8')
 
         for line in f:
-            answer = line.split("<|>")
+            answer = line.strip().split("<|>")
             if answer[0].lower() == question.lower():
                 print(f"---> {answer[1]}")
                 is_answer = True
@@ -63,6 +57,9 @@ def speaking(datafile):
 
         if not is_answer:
             add_phrase(datafile, question)
+
+        if question == 'пока':
+            return
 
 
 file_name = "data0303.txt"
