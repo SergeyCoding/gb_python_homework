@@ -7,7 +7,10 @@ def create_datafile(file_name):
 
     f = open(file_name, mode='r+', encoding='utf-8')
 
-    check_f = {"привет": "привет", 'как тебя зовут?': "Нафаня, а тебя?"}
+    check_f = {'привет': 'привет',
+               'как тебя зовут?': 'Нафаня, а тебя?',
+               'пока': 'пока',
+               'gjrf': 'пока'}
 
     for line in f:
         if len(check_f) == 0:
@@ -18,19 +21,19 @@ def create_datafile(file_name):
 
     if len(check_f) > 0:
         for ch in check_f:
-            f.write(f"{ch}<|>{check_f[ch]}\n")
+            f.write(f'{ch}<|>{check_f[ch]}\n')
 
     f.close()
 
 
 def add_phrase(datafile, question):
-    print("###")
+    print('###')
     print('Что обычно отвечают на эту фразу? ')
-    answer = input("> ")
+    answer = input('> ')
 
     f = open(datafile, mode='a', encoding='utf-8')
 
-    f.write(f"{question}<|>{answer}\n")
+    f.write(f'{question}<|>{answer}\n')
 
     f.close()
 
@@ -41,16 +44,16 @@ def speaking(datafile):
     print('Для выхода набрите "пока"')
 
     while True:
-        question = input("you> ")
+        question = input('you> ')
 
         is_answer = False
 
-        f = open(datafile, mode="r+", encoding='utf-8')
+        f = open(datafile, mode='r+', encoding='utf-8')
 
         for line in f:
-            answer = line.strip().split("<|>")
+            answer = line.strip().split('<|>')
             if answer[0].lower() == question.lower():
-                print(f"---> {answer[1]}")
+                print(f'---> {answer[1]}')
                 is_answer = True
 
         f.close
@@ -58,11 +61,11 @@ def speaking(datafile):
         if not is_answer:
             add_phrase(datafile, question)
 
-        if question == 'пока':
+        if question == 'пока' or question == 'gjrf':
             return
 
 
-file_name = "data0303.txt"
+file_name = 'data0303.txt'
 
 f = open(file_name, mode='a', encoding='utf-8')
 f.close()
