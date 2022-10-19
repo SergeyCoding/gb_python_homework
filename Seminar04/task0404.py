@@ -56,6 +56,8 @@ def print_polynom(polynom):
     print()
 
 
+print("Семинар 4. Задача 4")
+
 polynom1 = read_polynom("data0404a.txt")
 polynom2 = read_polynom("data0404b.txt")
 
