@@ -43,7 +43,7 @@ def add_phrase(datafile, question):
 
 
 def speaking(datafile):
-    print('Для выхода набрите "пока"')
+    print('Для выхода наберите "пока"')
 
     while True:
         question = input('you> ')
