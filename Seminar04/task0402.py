@@ -4,6 +4,8 @@
 # 2. «Сливочное», «Вафелька», «Сладкоежка»
 # Закончилось: «Бурёнка»
 
+print("Семинар 4. Задача 1")
+
 f = open('data0402.txt', mode='r', encoding='utf-8')
 
 nomenclature = set(f.readline().strip().split())
