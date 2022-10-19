@@ -44,7 +44,10 @@ def print_polynom(polynom):
     first = True
     for f in lst:
         p = abs(polynom[f])
-        if not first or polynom[f] < 0:
+
+        if first and polynom[f] < 0:
+            print("-", end="")
+        if not first:
             print(f" {'+' if polynom[f]>=0 else '-'} ", end="")
         if f == 0:
             print(f"{p}", end="")
