@@ -16,6 +16,7 @@ def read_polynom(file_name):
         .replace("-x", "-1x")
         .replace("x^", "&")
         .replace("x", "&1")
+        .strip('|')
     )
     result = dict()
     for p in s_polynom.split("|"):
