@@ -37,8 +37,8 @@ def is_end_game():
         check_line([(0, h), (1, h), (2, h)], "O")
 
     check_line([(0, 0), (1, 1), (2, 2)], "X")
-    check_line([(0, 0), (1, 1), (2, 2)], "X")
-    check_line([(2, 0), (1, 1), (0, 2)], "O")
+    check_line([(0, 0), (1, 1), (2, 2)], "O")
+    check_line([(2, 0), (1, 1), (0, 2)], "X")
     check_line([(2, 0), (1, 1), (0, 2)], "O")
 
     if global_end_game()[0] == "":
