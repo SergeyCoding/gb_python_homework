@@ -8,8 +8,20 @@ import random
 
 print("Семинар 6. Задача 2")
 
-number = int(input("Количество чисел: "))
+number = int(input("Трехзначное число: "))
 
-lst = list(random.randint(1, 10) for _ in range(number))
+if number < 100 or number > 999:
+    print("Ошибка!!! Проверьте введенные данные")
+    exit()
+
+lst = list(random.randint(0, 9) for _ in range(15))
+# test
+#lst = [8, 5, 0, 5, 3, 2, 2, 1, 2, 5, 0, 8, 3, 5, 7]
 print(lst)
-print(list(filter(lambda x: x > 5, lst)))
+
+is_exists = ''.join(list(map(lambda x: str(x), lst))).find(str(number))
+
+if is_exists >= 0:
+    print("да")
+else:
+    print("нет")
