@@ -1,28 +1,32 @@
+question = ''
 hidden_word = ''
 knownChars = set()
-initialized = False
 
 
 def init():
-    global initialized
     f = open('db/data.txt', 'a')
     f.close()
 
-    set_word("ПИТОНПИТОНПИТОНПИТОНПИТОНПИТОНПИТОН")
+    set_question("Можно дать на кассе")
+    set_word("\u043f\u044f\u0442\u0438\u0434\u0435\u0441\u044f\u0442\u0438\u0440\u0443\u0431\u043b\u0451\u0432\u043a\u0430")
     knownChars.clear()
 
-    initialized = True
+
+def set_question(q):
+    global question
+    question = q
 
 
-def set_word(w):
+def get_question():
+    return question
+
+
+def set_word(w: str):
     global hidden_word
-    hidden_word = w
+    hidden_word = w.upper()
 
 
 def get_word():
-    if not initialized:
-        init()
-
     return hidden_word
 
 
@@ -32,15 +36,11 @@ def add_knownChars(c: str):
 
 
 def get_knownChars():
-    if not initialized:
-        init()
-
     return knownChars
 
 
 def get_current_word_state():
     w = get_word()
-    print(w)
     unknown = set(get_word())-get_knownChars()
     for c in unknown:
         w = w.replace(c, '*')
@@ -56,10 +56,8 @@ def decrypt_word():
 
 
 def add_char(c: str):
-    add_knownChars(c)
-    print(c)
-    print(get_knownChars())
+    add_knownChars(c.capitalize())
 
 
 def is_game_end():
-    return False
+    return get_current_word_state().find('*') == -1

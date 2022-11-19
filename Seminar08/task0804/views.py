@@ -20,5 +20,8 @@ def get_yes_no():
 
 
 def show_current_word():
-    w = model.get_current_word_state()
-    print(w)
+    print(model.get_current_word_state())
+
+
+def question():
+    print(model.get_question())
