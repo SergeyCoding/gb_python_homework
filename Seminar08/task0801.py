@@ -16,8 +16,8 @@ def generate_course(num: int):
     return list(generate_group() for _ in range(num))
 
 
-def print_course(scoup: list):
-    for group in scoup:
+def print_course(course: list):
+    for group in course:
         print(group)
 
 
@@ -33,12 +33,12 @@ if number < 1:
     print("Ошибка!!! Проверьте введенные данные")
     exit()
 
-scoup = generate_course(number)
+course = generate_course(number)
 print("\nСписок групп:")
-print_course(scoup)
+print_course(course)
 print()
 
-avg = list(avg_of_group(gr) for gr in scoup)
+avg = list(avg_of_group(gr) for gr in course)
 print("Средние баллы:")
 print(avg)
 
