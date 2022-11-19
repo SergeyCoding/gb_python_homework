@@ -7,13 +7,14 @@ def run():
 
 
 def menu():
+    views.info("Вы хотите играть?")
+    if(views.get_yes_no()):
+        game()
+        return
+
     views.info("Вы хотите добавить вопрос?")
     if(views.get_yes_no()):
-        pass
-    else:
-        views.info("Вы хотите играть?")
-        if(views.get_yes_no()):
-            game()
+        return
 
 
 def game():

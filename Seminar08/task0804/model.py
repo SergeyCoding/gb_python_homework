@@ -1,29 +1,38 @@
-hidden_word = [""]
+hidden_word = ''
 knownChars = set()
-isInitialized = False
+initialized = False
 
 
 def init():
+    global initialized
     f = open('db/data.txt', 'a')
     f.close()
 
     set_word("ПИТОНПИТОНПИТОНПИТОНПИТОНПИТОНПИТОН")
     knownChars.clear()
 
+    initialized = True
+
 
 def set_word(w):
-    hidden_word[0] = w
+    global hidden_word
+    hidden_word = w
 
 
 def get_word():
-    if not isInitialized:
+    if not initialized:
         init()
 
-    return hidden_word[0]
+    return hidden_word
+
+
+def add_knownChars(c: str):
+    knownChars.add(c)
+    return knownChars
 
 
 def get_knownChars():
-    if not isInitialized:
+    if not initialized:
         init()
 
     return knownChars
@@ -47,7 +56,9 @@ def decrypt_word():
 
 
 def add_char(c: str):
-    get_knownChars().add(c)
+    add_knownChars(c)
+    print(c)
+    print(get_knownChars())
 
 
 def is_game_end():

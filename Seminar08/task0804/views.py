@@ -13,10 +13,10 @@ def get_char():
 def get_yes_no():
     answer = ''
 
-    while(len(answer) == 0 or (answer[0].lower() not in {'n', 'y'})):
+    while(len(answer) == 0 or (answer[0].lower() not in {'n', 'y', 'д', 'н'})):
         answer = input()
 
-    return answer[0] == 'y'
+    return answer[0].lower() in {'y', 'д'}
 
 
 def show_current_word():
