@@ -9,7 +9,7 @@ def init():
     global secret_number
     global game_in_process
     global counter
-    secret_number = randint(1, 10)
+    secret_number = randint(1, 1000)
     game_in_process = True
     counter = 0
 
