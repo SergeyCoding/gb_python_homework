@@ -3,43 +3,49 @@
 # Задача 2. Добавьте в бота игру «Угадай числа». Бот загадывает число от 1 до 1000.
 # Когда игрок угадывает его, бот выводит количество сделанных ходов.
 
-import time
-import requests
+from telebot import types
 import telebot
+import controller
 
+print('Start')
 
 token_bot = "5949396844:AAF0WFXRL1reMxkUKDkUlKGTLfxqwu-FzCM"
 bot = telebot.TeleBot(token_bot, parse_mode=None)
 
 
-@bot.message_handler(commands=['start', 'help', 'hello'])
+@bot.callback_query_handler(func=lambda call: True)
+def test_callback(call):
+    print(f'call: {call}')
+
+
+@bot.message_handler(commands=['start', 'game', 'calc'],)
 def send_welcome(message):
-    bot.reply_to(message, "Howdy, how are you doing?")
+    print(message.text)
+    if message.text == '/start':
+        controller.change_state('dialog')
+        bot.send_message(message.chat.id, "3")
+        bot.send_message(message.chat.id, "2")
+        bot.send_message(message.chat.id, "1")
+        bot.send_message(message.chat.id, "...")
+        bot.send_message(message.chat.id, "Бот запущен...")
+        bot.send_message(message.chat.id, "Наберите /game или /calc")
+    elif message.text == '/calc':
+        controller.  change_state('calc')
+        bot.send_message(message.chat.id, "Калькулятор")
+        bot.send_message(message.chat.id, "Введите математическое выражение: ")
+    elif message.text == '/game':
+        controller. change_state('game')
+        bot.send_message(message.chat.id, "Угадай число")
+        txt = "Я задумал число от 1 до 1000, попробуй его угадать:"
+        bot.send_message(message.chat.id, txt)
 
 
-# @bot.message_handler(func=lambda m: True)
-# def echo_all(message):
-#     data = open('user_message.txt', 'a+', encoding='utf-8')
-#     data.writelines(str(message.from_user.id) + ' ' + message.text + '\n')
-#     data.close()
-
-
-@bot.message_handler(content_types=["text"])
-def hello_user(message):
-    if 'привет' in message.text:
-        bot.reply_to(message, 'привет, ' + message.from_user.first_name)
-    elif message.text == 'играть':
-        bot.reply_to(message, 'хочешь поиграть?')
-    elif message.text == 'погода':
-        r = requests.get('https://wttr.in/?0T')
-        bot.reply_to(message, r.text)
-    elif message.text == 'котик':
-        r = f'https://cataas.com/cat?t=${time.time()}'
-        bot.send_photo(message.chat.id, r)
-    elif message.text == 'файл':
-        data = open('user_message.txt', encoding='utf-8')
-        bot.send_document(message.chat.id, data)
-        data.close()
+@bot.message_handler(content_types=['text'])
+def send_welcome(message):
+    print(message.text)
+    msg = controller.inProcess(message.text)
+    if len(msg) > 0:
+        bot.send_message(message.chat.id, msg[0])
 
 
 bot.infinity_polling()
