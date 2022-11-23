@@ -9,7 +9,7 @@ import controller
 
 print('Start')
 
-token_bot = "5949396844:AAF0WFXRL1reMxkUKDkUlKGTLfxqwu-FzCM"
+token_bot = ""
 bot = telebot.TeleBot(token_bot, parse_mode=None)
 
 
