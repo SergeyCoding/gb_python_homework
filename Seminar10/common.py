@@ -1,3 +1,5 @@
+import os
+
 data_dir = "data/"
 question_file = 'questions.dat'
 answers_file = 'answers.dat'
@@ -6,6 +8,9 @@ state_file = 'state.dat'
 
 def init_data():
     global data_dir
+
+    if not os.path.exists(data_dir):
+        os.mkdir(data_dir)
 
     f = open(data_dir+question_file, 'a')
     f.close()
@@ -113,6 +118,8 @@ def get_state(user_id: int):
 
 
 def get_active_question():
+    st = ''
+
     f = open(data_dir+state_file, 'r', encoding='utf-8')
     for line in f.readlines():
         st = line[line.find(' '):].strip()

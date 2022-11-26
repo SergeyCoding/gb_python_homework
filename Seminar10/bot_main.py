@@ -2,20 +2,14 @@
 # Задача 2. Добавьте боту модуль, который позволяет считывать из файла вопрос,
 # отвечать на него и отправлять ответ обратно пользователю.
 
-from telebot import types
 import telebot
 import bot_state
-
+from common_btn import send_buttons as sb
 
 print('Start')
 
 token_bot = "5764995796:AAEFcUF-ZtlQthT5kx8Hodzp3zt5HKCgdmA"
 bot = telebot.TeleBot(token_bot, parse_mode=None)
-
-states = {'wait': "Введите Ваш вопрос",
-          'process': "Ваш запрос обрабатывается",
-          'answer': "Ответ",
-          'done': "Вопрос закрыт"}
 
 
 @bot.message_handler(commands=['start'],)
@@ -27,15 +21,7 @@ def send_welcome(message):
     if message.text == '/start':
         bot_state.start_question(curUser)
         bot.send_message(curChat, "Центр поддержки...")
-        send_buttons(curChat, "Введите Ваш вопрос?", ['Отменить', ])
-
-
-def send_buttons(curChat: int, msg: str, btn_list: list):
-    markup = types.ReplyKeyboardMarkup(
-        resize_keyboard=True, one_time_keyboard=True)
-
-    markup.row(*[types.KeyboardButton(x) for x in btn_list])
-    bot.send_message(curChat, msg, reply_markup=markup)
+        sb(bot, curChat, "Введите Ваш вопрос?", ['Отменить', ])
 
 
 @bot.message_handler(content_types=['text'])
@@ -58,23 +44,23 @@ def send_welcome(message):
     if message.text == 'Статус':
         cs = bot_state.get_current_state(curUser)
         if cs == 'wait':
-            send_buttons(curChat, "Ведите Ваш вопрос?", ["Статус", "Отменить"])
+            sb(bot, curChat, "Ведите Ваш вопрос?", ["Статус", "Отменить"])
         if cs == 'process':
-            send_buttons(curChat, "Ваш запрос обрабатывается...",
-                         ["Статус", "Отменить"])
+            sb(bot, curChat, "Ваш запрос обрабатывается...",
+               ["Статус", "Отменить"])
         if cs == 'answer':
             asw = bot_state.get_answer(curUser)
-            send_buttons(curChat, f"Ответ: {asw}", ["Статус", "Ответ получен"])
+            sb(bot, curChat, f"Ответ: {asw}", ["Статус", "Ответ получен"])
         if cs == 'done':
             bot.send_message(curChat, 'Активных вопросов нет.')
-            send_buttons(
-                curChat, 'Если появятся вопросы. Наберите /start', ["Статус"])
+            sb(bot, curChat,
+               'Если появятся вопросы. Наберите /start', ["Статус"])
         return
 
     if bot_state.get_current_state(curUser) == 'wait':
         bot_state.set_question(curUser, message.text)
-        send_buttons(curChat, "Ваш запрос обрабатывается...",
-                     ["Статус", "Отменить"])
+        sb(bot, curChat, "Ваш запрос обрабатывается...",
+           ["Статус", "Отменить"])
 
 
 bot.infinity_polling()

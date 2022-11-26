@@ -1,8 +1,6 @@
 import common
 import telebot
-
-
-common.init_data()
+from common_btn import send_buttons as sb
 
 print('Служба поддержки \n')
 
@@ -21,4 +19,4 @@ while True:
 
     common.create_answer(id, answer)
     common.set_state(id, 'answer')
-    bot.send_message(id, answer)
+    sb(bot, id, f"Ответ: {answer}", ["Статус", "Ответ получен"])
