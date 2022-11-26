@@ -31,13 +31,5 @@ def done_question(user_id):
     return
 
 
-def is_question(user_id: int):
-    pass
-
-
-def is_answer(user_id: int):
-    pass
-
-
-def is_answer_done(user_id: int):
-    pass
+def get_answer(user_id):
+    return common.read_answer(user_id)

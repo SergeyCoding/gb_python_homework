@@ -3,6 +3,7 @@ question_file = 'questions.dat'
 answers_file = 'answers.dat'
 state_file = 'state.dat'
 
+
 def init_data():
     global data_dir
 
@@ -14,6 +15,7 @@ def init_data():
 
     f = open(data_dir+state_file, 'a')
     f.close()
+
 
 init_data()
 
@@ -69,12 +71,24 @@ def rewrite(file_name: str, user_id: int):
     f.close()
 
 
-def create_answer(answer: str):
+def create_answer(user_id: int, answer: str):
+    f = open(data_dir+answers_file, 'a', encoding='utf-8')
+    f.write(f"{user_id} {answer}\n")
+    f.close()
     pass
 
 
-def read_answer(id: int, question: str):
-    pass
+def read_answer(user_id: int):
+    f = open(data_dir+answers_file, 'r', encoding='utf-8')
+
+    for line in f.readlines():
+        pos = line.find(' ')
+        if int(line[:pos]) == user_id:
+            res = line[pos:].strip()
+            break
+    f.close()
+
+    return res
 
 
 def set_state(user_id: int, state: str):
@@ -96,3 +110,18 @@ def get_state(user_id: int):
     f.close()
 
     return res
+
+
+def get_active_question():
+    f = open(data_dir+state_file, 'r', encoding='utf-8')
+    for line in f.readlines():
+        st = line[line.find(' '):].strip()
+        if st == 'process':
+            user_id = int(line[:line.find(' ')])
+            break
+    f.close()
+
+    if st != 'process':
+        return 0, ''
+
+    return user_id, read_question(user_id)

@@ -49,37 +49,32 @@ def send_welcome(message):
         bot_state.done_question(curUser)
         return
 
+    if message.text == 'Ответ получен':
+        bot.send_message(curChat, 'Рад был помочь...')
+        bot.send_message(curChat, 'Если появятся вопросы. Наберите /start')
+        bot_state.done_question(curUser)
+        return
+
     if message.text == 'Статус':
-        cs=bot_state.get_current_state(curUser)
-        if cs=='wait':
-            send_buttons(curChat, "Ведите Ваш вопрос?",["Статус", "Отменить"])
-        if cs=='process':
-            send_buttons(curChat, "Ваш запрос обрабатывается...",["Статус", "Отменить"])
-        if cs=='answer':
-            asw=bot_state.get_answer(curUser)
-            send_buttons(curChat, f"Ответ: {asw}",["Статус", "Отменить"])
-        if cs=='done':
+        cs = bot_state.get_current_state(curUser)
+        if cs == 'wait':
+            send_buttons(curChat, "Ведите Ваш вопрос?", ["Статус", "Отменить"])
+        if cs == 'process':
+            send_buttons(curChat, "Ваш запрос обрабатывается...",
+                         ["Статус", "Отменить"])
+        if cs == 'answer':
+            asw = bot_state.get_answer(curUser)
+            send_buttons(curChat, f"Ответ: {asw}", ["Статус", "Ответ получен"])
+        if cs == 'done':
             bot.send_message(curChat, 'Активных вопросов нет.')
-            send_buttons(curChat, 'Если появятся вопросы. Наберите /start',["Статус"])
+            send_buttons(
+                curChat, 'Если появятся вопросы. Наберите /start', ["Статус"])
         return
 
     if bot_state.get_current_state(curUser) == 'wait':
         bot_state.set_question(curUser, message.text)
         send_buttons(curChat, "Ваш запрос обрабатывается...",
                      ["Статус", "Отменить"])
-
-    # if bot_state.get_current_state(curUser) == 'process':
-    #     if message.text == 'Статус':
-    #         bot.send_message(curChat, "Ваш вопрос обрабатывается...")
-    #         bot.send_message(curChat, bot_state.questino(curUser))
-    #         markup = types.ReplyKeyboardMarkup()
-    #         itembtn_question = types.KeyboardButton('Статус')
-    #         itembtn_allright = types.KeyboardButton('Отменить')
-    #         markup.row(itembtn_question, itembtn_allright)
-    #         bot.send_message(curChat, "?", markup)
-
-    #     if message.text == 'Отменить':
-    #         bot_state.start_question()
 
 
 bot.infinity_polling()
