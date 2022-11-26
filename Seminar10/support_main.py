@@ -4,7 +4,7 @@ from common_btn import send_buttons as sb
 
 print('Служба поддержки \n')
 
-token_bot = "5764995796:AAEFcUF-ZtlQthT5kx8Hodzp3zt5HKCgdmA"
+token_bot = ""
 bot = telebot.TeleBot(token_bot, parse_mode=None)
 
 while True:
