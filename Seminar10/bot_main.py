@@ -4,7 +4,6 @@
 
 from telebot import types
 import telebot
-import common
 import bot_state
 
 
@@ -13,54 +12,62 @@ print('Start')
 token_bot = "5764995796:AAEFcUF-ZtlQthT5kx8Hodzp3zt5HKCgdmA"
 bot = telebot.TeleBot(token_bot, parse_mode=None)
 
-
-# @bot.callback_query_handler(func=lambda call: True)
-# def test_callback(call):
-#     print(f'call: {call}')
-
-states = {1: "Введите Ваш вопрос",
-          2: "Ваш запрос обрабатывается",
-          3: "Ответ",
-          0: "Вопрос закрыт"}
+states = {'wait': "Введите Ваш вопрос",
+          'process': "Ваш запрос обрабатывается",
+          'answer': "Ответ",
+          'done': "Вопрос закрыт"}
 
 
-@bot.message_handler(commands=['start', 'game', 'calc'],)
+@bot.message_handler(commands=['start'],)
 def send_welcome(message):
-    # for k, v in message.__dict__.items():
-    #     print(f'{k}: {v}')
-    print(message.json)
     curUser = message.from_user.id
     curChat = message.chat.id
-    print(f'{curUser} message.text')
+    print(f'{curUser} {message.text}')
 
     if message.text == '/start':
+        bot_state.start_question(curUser)
         bot.send_message(curChat, "Центр поддержки...")
-        if bot_state.get_current_state(curUser) == 2:
-            bot.send_message(curChat, "Ваш вопрос обрабатывается...")
-            bot.send_message(curChat, bot_state.questino(curUser))
-            markup = types.ReplyKeyboardMarkup()
-            itembtn_allright = types.KeyboardButton('Статус')
-            itembtn_allright = types.KeyboardButton('Отменить')
-            markup.row(itembtn_question, itembtn_allright)
-            bot.send_message(curChat, "?", markup)
-        else:
-            bot.send_message(message.chat.id, "Введите Ваш вопрос?")
-    elif message.text == '/calc':
-        common.init_data()
-    else:
-        markup = types.ReplyKeyboardMarkup()
-        itembtn_question = types.KeyboardButton('Нужна помощь')
-        itembtn_allright = types.KeyboardButton('Вопрос решён')
-        markup.row(itembtn_question, itembtn_allright)
-        bot.send_message(message.chat.id, "", markup)
+        send_buttons(curChat, "Введите Ваш вопрос?", ['Отменить', ])
+
+
+def send_buttons(curChat: int, msg: str, btn_list: list):
+    markup = types.ReplyKeyboardMarkup(
+        resize_keyboard=True, one_time_keyboard=True)
+
+    markup.row(*[types.KeyboardButton(x) for x in btn_list])
+    bot.send_message(curChat, msg, reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
 def send_welcome(message):
+    curUser = message.from_user.id
+    curChat = message.chat.id
     print(message.text)
-    # msg = controller.inProcess(message.text)
-    # if len(msg) > 0:
-    #     bot.send_message(message.chat.id, msg[0])
+
+    if message.text == 'Отменить':
+        bot.send_message(curChat, 'Если появятся вопросы. Наберите /start')
+        bot_state.done_question(curUser)
+        return
+
+    print('aaaa0')
+    if bot_state.get_current_state(curUser) == 'wait':
+        print('aaaa1')
+        bot_state.set_question(curUser, message.text)
+        send_buttons(curChat, "Ваш запрос обрабатывается...",
+                     ["Статус", "Отменить"])
+
+    # if bot_state.get_current_state(curUser) == 'process':
+    #     if message.text == 'Статус':
+    #         bot.send_message(curChat, "Ваш вопрос обрабатывается...")
+    #         bot.send_message(curChat, bot_state.questino(curUser))
+    #         markup = types.ReplyKeyboardMarkup()
+    #         itembtn_question = types.KeyboardButton('Статус')
+    #         itembtn_allright = types.KeyboardButton('Отменить')
+    #         markup.row(itembtn_question, itembtn_allright)
+    #         bot.send_message(curChat, "?", markup)
+
+    #     if message.text == 'Отменить':
+    #         bot_state.start_question()
 
 
 bot.infinity_polling()

@@ -1,26 +1,33 @@
 import common
 
-states = {1: "Введите Ваш вопрос",
-          2: "Ваш запрос обрабатывается",
-          3: "Ответ",
-          0: "Вопрос закрыт"}
+states = {'wait': "Введите Ваш вопрос",
+          'process': "Ваш запрос обрабатывается",
+          'answer': "Ответ",
+          'done': "Вопрос закрыт"}
 
 
 def get_current_state(user_id: int):
-    if not is_question(user_id):
-        return 1
+    return common.get_state(user_id)
 
-    if not is_answer(user_id):
-        return 2
 
-    if is_answer_done(user_id):
-        return 0
-
-    return 3
+def set_current_state(user_id: int, state: str):
+    common.set_state(user_id, state)
 
 
 def start_question(user_id):
-    common.delete(user_id)
+    common.delete_question(user_id)
+    common.set_state(user_id, 'wait')
+    return
+
+
+def set_question(curUser: int, question: str):
+    common.set_state(curUser, 'process')
+    common.create_question(curUser, question)
+    return
+
+
+def done_question(user_id):
+    common.set_state(user_id, 'done')
     return
 
 
