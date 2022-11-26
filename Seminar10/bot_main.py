@@ -49,9 +49,21 @@ def send_welcome(message):
         bot_state.done_question(curUser)
         return
 
-    print('aaaa0')
+    if message.text == 'Статус':
+        cs=bot_state.get_current_state(curUser)
+        if cs=='wait':
+            send_buttons(curChat, "Ведите Ваш вопрос?",["Статус", "Отменить"])
+        if cs=='process':
+            send_buttons(curChat, "Ваш запрос обрабатывается...",["Статус", "Отменить"])
+        if cs=='answer':
+            asw=bot_state.get_answer(curUser)
+            send_buttons(curChat, f"Ответ: {asw}",["Статус", "Отменить"])
+        if cs=='done':
+            bot.send_message(curChat, 'Активных вопросов нет.')
+            send_buttons(curChat, 'Если появятся вопросы. Наберите /start',["Статус"])
+        return
+
     if bot_state.get_current_state(curUser) == 'wait':
-        print('aaaa1')
         bot_state.set_question(curUser, message.text)
         send_buttons(curChat, "Ваш запрос обрабатывается...",
                      ["Статус", "Отменить"])

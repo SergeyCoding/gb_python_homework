@@ -3,7 +3,6 @@ question_file = 'questions.dat'
 answers_file = 'answers.dat'
 state_file = 'state.dat'
 
-
 def init_data():
     global data_dir
 
@@ -15,6 +14,8 @@ def init_data():
 
     f = open(data_dir+state_file, 'a')
     f.close()
+
+init_data()
 
 
 def create_question(user_id: int, question: str):
@@ -40,7 +41,7 @@ def read_question(user_id: int):
     for line in f.readlines():
         pos = line.find(' ')
         if int(line[:pos]) == user_id:
-            res = line[pos:]
+            res = line[pos:].strip()
             break
     f.close()
 
@@ -90,7 +91,7 @@ def get_state(user_id: int):
     for line in f.readlines():
         pos = line.find(' ')
         if int(line[:pos]) == user_id:
-            res = line[pos:]
+            res = line[pos:].strip()
             break
     f.close()
 
