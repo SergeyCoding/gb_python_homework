@@ -3,9 +3,7 @@
 # сортировки числа в списке в порядке убывания. Можно использовать любой алгоритм сортировки.
 
 def mul_table(number):
+    "mul talbe"
     for i in range(1,number):
         for j in range(1,number):
             print(f'{i} * {j} = {i*j}')
-
-
-

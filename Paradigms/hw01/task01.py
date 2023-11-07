@@ -3,12 +3,12 @@
 # сортировки числа в списке в порядке убывания. Можно использовать любой алгоритм сортировки.
 
 def sort_list_imprative(numbers):
-    for i in range(len(numbers)):
-        for j in range(i+1,len(numbers)):
-            if numbers[i]>numbers[j]:
-              k=numbers[i]
-              numbers[i]=numbers[j]
-              numbers[j]=k
+    "sort list imprative"
+    for i, num1 in enumerate(numbers):
+        for j, num2 in enumerate(i+1,len(numbers)):
+            if num1>num2:
+                numbers[i]=num2
+                numbers[j]=num1
     return numbers
 
 
@@ -17,4 +17,5 @@ def sort_list_imprative(numbers):
 # Написать точно такую же процедуру, но в декларативном стиле
 
 def sort_list_declarative(numbers):
+    "sort list declarative"
     return numbers.sort()
