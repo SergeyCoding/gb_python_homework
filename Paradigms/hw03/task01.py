@@ -30,4 +30,4 @@ if __name__=="__main__":
     game.print_fld()
 
     print()
-    print(f"Выиграли: {game.winner[0]}")
+    print(f"Выиграли: {game.winner}")
