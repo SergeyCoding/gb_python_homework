@@ -6,7 +6,7 @@ class XoGame:
     "Крестики-нолики"
 
     board_fld = [[".", ".", "."], [".", ".", "."], [".", ".", "."]]
-    board_hints = [""]
+    winner = ""
 
     def __init__(self):
         pass
@@ -17,7 +17,7 @@ class XoGame:
         for (v, h) in line:
             if self.board_fld[v][h] != ch:
                 return
-        self.board_hints[0] = ch
+        self.winner = ch
 
 
 
@@ -36,9 +36,9 @@ class XoGame:
         self.check_line([(2, 0), (1, 1), (0, 2)], "X")
         self.check_line([(2, 0), (1, 1), (0, 2)], "O")
 
-        if self.board_hints[0] == "":
+        if self.winner == "":
             if len(self.available_positions()) == 0:
-                self.board_hints[0] = "XO"
+                self.winner = "XO"
 
 
     def print_hint(self):
@@ -68,7 +68,7 @@ class XoGame:
 
     def play(self):
         "play"
-        while self.board_hints[0] == "":
+        while self.winner == "":
             self.print_fld()
 
             move = self.available_positions()
@@ -85,7 +85,7 @@ class XoGame:
 
             self.is_end_game()
 
-            if self.board_hints[0] == "":
+            if self.winner == "":
                 move = self.available_positions()
 
                 move0 = move[random.randint(0, len(move) - 1)]
@@ -94,5 +94,5 @@ class XoGame:
 
                 self.is_end_game()
 
-if __name__=="main":
+if __name__=="__main__":
     pass

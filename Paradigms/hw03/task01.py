@@ -20,13 +20,7 @@
 
 import xo_game
 
-# xo_game1=XoGame()
-
-# xo_game1.
-
-
-
-if __name__=="main":
+if __name__=="__main__":
     print("Крестики-нолики")
 
     game=xo_game.XoGame()
@@ -34,6 +28,6 @@ if __name__=="main":
     game.print_hint()
     game.play()
     game.print_fld()
-    
+
     print()
-    print(f"Выиграли: {global_end_game()[0]}")
+    print(f"Выиграли: {game.winner[0]}")
