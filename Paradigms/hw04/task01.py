@@ -14,19 +14,24 @@
 # упростит вам жизнь.
 
 # ● Формула корреляции Пирсона:
-# r=sum((xi-Mx)*(yi-My))/sqrt(sum((xi-Mx)^2 * (yi-Mi)^2))
+# r=sum((xi-Mx)*(yi-My))/sqrt(sum((xi-Mx)^2 * (yi-My)^2))
+
+import math
+
+
+def correlation(xs,ys):
+    "Корреляция"
+
+    mx=sum(xs)/len(xs)
+    my=sum(ys)/len(ys)
+
+    s1=sum(map(lambda el:(el[0]-mx)*(el[1]-my),zip(xs,ys)))
+    s2=sum(map(lambda el:(el[0]-mx)**2 * (el[1]-my)**2,zip(xs,ys)))
+
+    return s1/math.sqrt(s2)
+
 
 X=[1,2,3,1,2,5,6,4,8,9]
 Y=[7,2,8,1,9,5,10,4,11,9]
 
-def get_avg(data):
-    "средняя величина"
-    return sum(data)/len(data)
-
-def get_delta(avg,value,data):
-    "отклонение от среднего"
-    return value-avg(data)
-
-def correlation(arr1,arr2):
-    "корреляция"
-    return sum()
+print(correlation(X,Y))
