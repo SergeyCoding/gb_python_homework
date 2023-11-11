@@ -19,10 +19,14 @@
 X=[1,2,3,1,2,5,6,4,8,9]
 Y=[7,2,8,1,9,5,10,4,11,9]
 
-def avg(data):
+def get_avg(data):
     "средняя величина"
-    return avg(data)
+    return sum(data)/len(data)
 
-def delta(x, ):
- "отклонение от среднего"
- pass
+def get_delta(avg,value,data):
+    "отклонение от среднего"
+    return value-avg(data)
+
+def correlation(arr1,arr2):
+    "корреляция"
+    return sum()
