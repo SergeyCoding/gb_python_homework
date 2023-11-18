@@ -4,7 +4,6 @@ import math
 
 def div_search(arr, min_index,max_index,search_value):
     "Бинарный поиск"
-    print(min_index, max_index)
     if max_index-min_index<2:
         if arr[min_index]==search_value:
             return min_index
